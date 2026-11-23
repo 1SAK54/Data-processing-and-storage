@@ -1,0 +1,19 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Gradle
+.gradle/
+build/
+
+# Generated keys and certificates
+*.key
+*.crt
+
+# Java
+*.class
+
+# OS
+.DS_Store
+Thumbs.db

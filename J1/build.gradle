@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'ru.nsu.vorona'
+version = '1.0'
+
+repositories { mavenCentral() }
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+dependencies {
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.80'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaExec).configureEach {
+    defaultCharacterEncoding = 'UTF-8'
+    systemProperty 'stdout.encoding', 'UTF-8'
+    systemProperty 'stderr.encoding', 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+    defaultCharacterEncoding = 'UTF-8'
+    systemProperty 'stdout.encoding', 'UTF-8'
+    systemProperty 'stderr.encoding', 'UTF-8'
+}
+application {
+    mainClass = 'ru.nsu.vorona.ServerMain'
+    applicationDefaultJvmArgs = ['-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8', '-Dstderr.encoding=UTF-8']
+}
+
+tasks.register('generateSigner', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'ru.nsu.vorona.SignerMain'
+    args 'signing.key'
+}
+
+tasks.register('client', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'ru.nsu.vorona.ClientMain'
+}

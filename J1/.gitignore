@@ -1,0 +1,11 @@
+.gradle/
+build/
+.idea/
+*.iml
+out/
+*.class
+*.key
+*.crt
+*.pem
+.DS_Store
+Thumbs.db
